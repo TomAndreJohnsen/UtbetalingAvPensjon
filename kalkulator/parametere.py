@@ -1,5 +1,12 @@
 from datetime import date
 
+class RenteScenario:
+    def __init__(self, lav, mid=None, hoy=None):
+        self.lav = lav
+        self.mid = mid if mid is not None else lav
+        self.hoy = hoy if hoy is not None else lav
+
+
 class Parametere:
     def __init__(self):
         #Persondata
@@ -14,21 +21,18 @@ class Parametere:
         self.inflasjon = 0.025
         self.rente_kostnad = 0.002
 
-        #Uttak
-        self.uttak_per_maaned_netto = 48000
-        self.uttak_per_maaned_brutto = self.beregn_brutto_fra_netto(self.uttak_per_maaned_netto)
-
         #Skatt
         self.skatt_gevinst = 0.3784
         self.formueskatt_kommune = 0.00525
         self.formueskatt_stat = RenteScenario(lav=0.00475, hoy=0.00575)
 
+        #Uttak
+        self.uttak_per_maaned_netto = 48000
+        self.uttak_per_maaned_brutto = self.beregn_brutto_fra_netto(self.uttak_per_maaned_netto)
+
         #Formue
         self.gjeld = 0
         self.formue_eiendom = 0
-        
 
     def beregn_brutto_fra_netto(self, netto):
         return netto / (1 - self.skatt_gevinst)
-
-    
