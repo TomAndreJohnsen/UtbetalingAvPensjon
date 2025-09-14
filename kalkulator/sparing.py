@@ -19,6 +19,6 @@ def sluttverdi_ved_start(param):
            (param.pensjon_start.month - param.fodselsdato.month)
     saldo = param.startkapital_brutto
     for _ in range(maaneder):
-        saldo = saldo * (1 + param.rente_fond.mid / 12) + param.maanedlig_innskudd
+        saldo = saldo * (1 + param.rente_fond / 12) + param.maanedlig_innskudd
     return saldo
 
