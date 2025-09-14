@@ -1,0 +1,1 @@
+#Felles funksjoner som datoer, konvertering osv.

@@ -1,3 +1,5 @@
+#Alt som gjelder innskudd og vekst før pensjon
+
 def maanedlig_saldo(startbelop, maander, aarlig_rente, maanedlig_uttak):
     saldo_liste = []
     saldo = startbelop
@@ -6,4 +8,5 @@ def maanedlig_saldo(startbelop, maander, aarlig_rente, maanedlig_uttak):
         saldo -= maanedlig_uttak
         saldo_liste.append(saldo)
     return saldo_liste
+
 
