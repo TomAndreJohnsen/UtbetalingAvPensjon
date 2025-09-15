@@ -25,6 +25,7 @@ class Parametere:
         self.skatt_gevinst = 0.3784
         self.formueskatt_kommune = 0.00525
         self.formueskatt_stat = RenteScenario(lav=0.00475, hoy=0.00575)
+        self.bunnfradrag_formue = 1_760_000
 
         #Uttak
         self.uttak_per_maaned_netto = 48000
@@ -35,4 +36,4 @@ class Parametere:
         self.formue_eiendom = 0
 
     def beregn_brutto_fra_netto(self, netto):
-        return netto / (1 - self.skatt_gevinst)
+        return netto / (1 - self.skatt_gevinst) 
