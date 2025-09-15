@@ -5,8 +5,6 @@ from kalkulator.parametere import RenteScenario
 
 
 param = Parametere()
-
 slutt = sluttverdi_ved_start(param)
-print("Fondets verdi ved start av pensjon:", round(slutt, 2))
-formueskatt = beregning.beregn_formueskatt(param, round(slutt, 2))
-print("Formueskatten er på: ", round(formueskatt, 2))
+
+print("Fondets verdi ved start av pensjon: ", round(slutt, 2))
