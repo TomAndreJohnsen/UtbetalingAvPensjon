@@ -1,66 +1,32 @@
 import datetime as dt
-from dataclasses import dataclass
-from email.policy import default
-from kalkulator.sparing import maanedlig_saldo
+from dataclasses import dataclass, field
 
-class RenteScenario:
-    def __init__(self, lav, mid=None, hoy=None):
-        self.lav = lav
-        self.mid = mid if mid is not None else lav
-        self.hoy = hoy if hoy is not None else lav
-
+# -----------------------------
+# Funksjoner
+# -----------------------------
 def hent_verdi(input, default):
     return input if input is not None else default
 
 def beregn_brutto_fra_netto(netto, gevinst):
     return netto / (1 - gevinst) 
 
-@dataclass
-class Person:
-    fodselsdato: dt.date
-    pensjon_start: dt.date
-    pensjon_slutt: dt.date
-    gjeld: int
-    eiendom: int
+# -----------------------------
+# Rentescenario
+# -----------------------------
+class RenteScenario:
+    def __init__(self, lav, mid=None, hoy=None):
+        self.lav = lav
+        self.mid = mid if mid is not None else lav
+        self.hoy = hoy if hoy is not None else lav
 
-@dataclass
-class Skatt:
-    gevinst: float
-    formue_kommune: float
-    formue_stat_lav: float
-    formue_stat_hoy: float
-    formue_bunnfradrag: float
-    formue_grense_hoy: int
-
-@dataclass
-class Fond:
-    startkapital: int
-    maanedlig_innskudd: int
-    rente_lav: float
-    rente_mid: float
-    rente_hoy: float
-    inflasjon: float
-    kostnad: float
-
-@dataclass
-class Uttak:
-    maanedlig_netto: int
-    maanedlig_brutto: int
-
-@dataclass
-class Parametere:
-    person: Person
-    skatt: Skatt
-    fond: Fond
-    uttak: Uttak
-
-#Default verdier
+# -----------------------------
+# Default verdier
+# -----------------------------
 default_fodselsdato = dt.date(1987, 4, 3)
 default_pensjon_start = dt.date(2054, 4, 3)
 default_pensjon_slutt = dt.date(2080, 4, 3)
 default_person_gjeld = 0
 default_person_eiendom = 0
-
 
 default_skatt_gevinst = 0.3784
 default_formue_kommune = 0.007
@@ -78,6 +44,48 @@ default_inflasjon = 0.025
 default_kostnad = 0.002
 
 default_maanedlig_netto = 35000
+
+# -----------------------------
+# Dataclasses
+# -----------------------------
+@dataclass
+class Person:
+    fodselsdato: dt.date = default_fodselsdato
+    pensjon_start: dt.date = default_pensjon_start
+    pensjon_slutt: dt.date = default_pensjon_slutt
+    gjeld: int = default_person_gjeld
+    eiendom: int = default_person_eiendom
+
+@dataclass
+class Skatt:
+    gevinst: float = default_skatt_gevinst
+    formue_kommune: float = default_formue_kommune
+    formue_stat_lav: float = default_formue_stat_lav
+    formue_stat_hoy: float = default_formue_stat_hoy
+    formue_bunnfradrag: float = default_formue_bunnfradrag
+    formue_grense_hoy: int = default_formue_grense_hoy
+
+@dataclass
+class Fond:
+    startkapital: int = default_startkapital
+    maanedlig_innskudd: int = default_maanedlig_innskudd
+    rente_lav: float = default_rente_lav
+    rente_mid: float = default_rente_mid
+    rente_hoy: float = default_rente_hoy
+    inflasjon: float = default_inflasjon
+    kostnad: float = default_kostnad
+
+@dataclass
+class Uttak:
+    maanedlig_netto: int = default_maanedlig_netto
+    maanedlig_brutto: int = field(default_factory=lambda: beregn_brutto_fra_netto(default_maanedlig_netto, default_skatt_gevinst))
+
+@dataclass
+class Parametere:
+    person: Person = field(default_factory=Person)
+    skatt: Skatt = field(default_factory=Skatt)
+    fond: Fond = field(default_factory=Fond)
+    uttak: Uttak = field(default_factory=Uttak)
 
 # Entry verdier
 entry_fodselsdato = None

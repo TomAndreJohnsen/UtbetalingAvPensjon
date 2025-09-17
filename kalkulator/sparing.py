@@ -21,12 +21,12 @@ def neste_maaned(dato):
 def sluttverdi_ved_start(param):
     from kalkulator.beregning import beregn_formueskatt
     param: Parametere = Parametere()
-    saldo = param.startkapital_brutto
+    saldo = param.fond.startkapital
     dato = date.today()
 
-    while dato < param.pensjon_start:
+    while dato < param.person.pensjon_start:
         # HUSK param.rente_fond.mid er statisk å må endres
-        saldo = saldo * (1 + param.rente_fond.mid / 12) + param.maanedlig_innskudd
+        saldo = saldo * (1 + param.fond.rente_mid / 12) + param.fond.maanedlig_innskudd
         dato = neste_maaned(dato)
 
         if dato.month == 12:
