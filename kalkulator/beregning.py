@@ -5,7 +5,6 @@ from .sparing import sluttverdi_ved_start
 
 
 def beregn_formueskatt(param, saldo):
-    param: Parametere = Parametere()
     if saldo <= param.skatt.formue_bunnfradrag:
         return 0
     

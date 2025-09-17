@@ -22,6 +22,7 @@ def sluttverdi_ved_start(param):
     param: Parametere = Parametere()
     saldo = param.fond.startkapital
     dato = date.today()
+    formueskatt_list = []
 
     while dato < param.person.pensjon_start:
         # HUSK param.rente_fond.mid er statisk å må endres
@@ -29,9 +30,8 @@ def sluttverdi_ved_start(param):
         dato = neste_maaned(dato)
 
         if dato.month == 12:
-            from main import formueskatt_list
             skatt = beregn_formueskatt(param, saldo)
             formueskatt_list.append(round(skatt, 2))
             saldo -= skatt
 
-    return saldo
+    return saldo, formueskatt_list

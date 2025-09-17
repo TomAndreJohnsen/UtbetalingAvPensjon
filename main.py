@@ -3,10 +3,10 @@ from kalkulator.sparing import sluttverdi_ved_start
 from kalkulator.parametere import Parametere
 from kalkulator.parametere import RenteScenario
 
-
 formueskatt_list = []
-param = Parametere()
-slutt = sluttverdi_ved_start(param)
 
-print("Fondets verdi ved start av pensjon: ", round(slutt, 2))
-print(formueskatt_list)
+param = Parametere()
+slutt, formueskatt_list = sluttverdi_ved_start(param)
+
+print("Fondets verdi ved start av pensjon: ", f"{round(slutt, 2):,}".replace(",", "."))
+#print(formueskatt_list)
