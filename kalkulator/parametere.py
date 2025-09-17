@@ -1,10 +1,163 @@
-from datetime import date
+import datetime as dt
+from dataclasses import dataclass
+from email.policy import default
+from kalkulator.sparing import maanedlig_saldo
 
 class RenteScenario:
     def __init__(self, lav, mid=None, hoy=None):
         self.lav = lav
         self.mid = mid if mid is not None else lav
         self.hoy = hoy if hoy is not None else lav
+
+def hent_verdi(input, default):
+    return input if input is not None else default
+
+def beregn_brutto_fra_netto(netto, gevinst):
+    return netto / (1 - gevinst) 
+
+@dataclass
+class Person:
+    fodselsdato: dt.date
+    pensjon_start: dt.date
+    pensjon_slutt: dt.date
+    gjeld: int
+    eiendom: int
+
+@dataclass
+class Skatt:
+    gevinst: float
+    formue_kommune: float
+    formue_stat_lav: float
+    formue_stat_hoy: float
+    formue_bunnfradrag: float
+    formue_grense_hoy: int
+
+@dataclass
+class Fond:
+    startkapital: int
+    maanedlig_innskudd: int
+    rente_lav: float
+    rente_mid: float
+    rente_hoy: float
+    inflasjon: float
+    kostnad: float
+
+@dataclass
+class Uttak:
+    maanedlig_netto: int
+    maanedlig_brutto: int
+
+@dataclass
+class Parametere:
+    person: Person
+    skatt: Skatt
+    fond: Fond
+    uttak: Uttak
+
+#Default verdier
+default_fodselsdato = dt.date(1987, 4, 3)
+default_pensjon_start = dt.date(2054, 4, 3)
+default_pensjon_slutt = dt.date(2080, 4, 3)
+default_person_gjeld = 0
+default_person_eiendom = 0
+
+
+default_skatt_gevinst = 0.3784
+default_formue_kommune = 0.007
+default_formue_stat_lav = 0.00475
+default_formue_stat_hoy = 0.00575
+default_formue_bunnfradrag = 1_760_000
+default_formue_grense_hoy = 20_000_000
+
+default_startkapital = 0
+default_maanedlig_innskudd = 2000
+default_rente_lav = 0.075
+default_rente_mid = 0.1039
+default_rente_hoy = 0.1524
+default_inflasjon = 0.025
+default_kostnad = 0.002
+
+default_maanedlig_netto = 35000
+
+# Entry verdier
+entry_fodselsdato = entry_fodselsdato.get() if entry_fodselsdato.get() else None
+entry_pensjon_start = entry_pensjon_start.get() if entry_pensjon_start.get() else None
+entry_pensjon_slutt = entry_pensjon_slutt.get() if entry_pensjon_slutt.get() else None
+entry_person_gjeld = int(entry_person_gjeld.get()) if entry_person_gjeld.get() else None
+entry_person_eiendom = int(entry_person_eiendom.get()) if entry_person_eiendom.get() else None
+
+entry_skatt_gevinst = float(entry_skatt_gevinst.get()) if entry_skatt_gevinst.get() else None
+entry_formue_kommune = float(entry_formue_kommune.get()) if entry_formue_kommune.get() else None
+entry_formue_stat_lav = float(entry_formue_stat_lav.get()) if entry_formue_stat_lav.get() else None
+entry_formue_stat_hoy = float(entry_formue_stat_hoy.get()) if entry_formue_stat_hoy.get() else None
+entry_formue_bunnfradrag = int(entry_formue_bunnfradrag.get()) if entry_formue_bunnfradrag.get() else None
+entry_formue_grense_hoy = int(entry_formue_grense_hoy.get()) if entry_formue_grense_hoy.get() else None
+
+entry_startkapital = int(entry_startkapital.get()) if entry_startkapital.get() else None
+entry_maanedlig_innskudd = int(entry_maanedlig_innskudd.get()) if entry_maanedlig_innskudd.get() else None
+entry_rente_lav = float(entry_rente_lav.get()) if entry_rente_lav.get() else None
+entry_rente_mid = float(entry_rente_mid.get()) if entry_rente_mid.get() else None
+entry_rente_hoy = float(entry_rente_hoy.get()) if entry_rente_hoy.get() else None
+entry_inflasjon = float(entry_inflasjon.get()) if entry_inflasjon.get() else None
+entry_kostnad = float(entry_kostnad.get()) if entry_kostnad.get() else None
+
+entry_maanedlig_netto = int(entry_maanedlig_netto.get()) if entry_maanedlig_netto.get() else None
+
+# Input verdier
+input_fodselsdato = hent_verdi(entry_fodselsdato, default_fodselsdato)
+input_pensjon_start = hent_verdi(entry_pensjon_start, default_pensjon_start)
+input_pensjon_slutt = hent_verdi(entry_pensjon_slutt, default_pensjon_slutt)
+input_person_gjeld = hent_verdi(entry_person_gjeld, default_person_gjeld)
+input_person_eiendom = hent_verdi(entry_person_eiendom, default_person_eiendom)
+
+input_skatt_gevinst = hent_verdi(entry_skatt_gevinst, default_skatt_gevinst)
+input_formue_kommune = hent_verdi(entry_formue_kommune, default_formue_kommune)
+input_formue_stat_lav = hent_verdi(entry_formue_stat_lav, default_formue_stat_lav)
+input_formue_stat_hoy = hent_verdi(entry_formue_stat_hoy, default_formue_stat_hoy)
+input_formue_bunnfradrag = hent_verdi(entry_formue_bunnfradrag, default_formue_bunnfradrag)
+input_formue_grense_hoy = hent_verdi(entry_formue_grense_hoy, default_formue_grense_hoy)
+
+input_startkapital = hent_verdi(entry_startkapital, default_startkapital)
+input_maanedlig_innskudd = hent_verdi(entry_maanedlig_innskudd, default_maanedlig_innskudd)
+input_rente_lav = hent_verdi(entry_rente_lav, default_rente_lav)
+input_rente_mid = hent_verdi(entry_rente_mid, default_rente_mid)
+input_rente_hoy = hent_verdi(entry_rente_hoy, default_rente_hoy)
+input_inflasjon = hent_verdi(entry_inflasjon, default_inflasjon)
+input_kostnad = hent_verdi(entry_kostnad, default_kostnad)
+
+input_maanedlig_netto = hent_verdi(entry_maanedlig_netto, default_maanedlig_netto)
+
+
+param = Parametere(
+    person=Person(
+        fodselsdato = input_fodselsdato,
+        pensjon_start = input_pensjon_start,
+        pensjon_slutt = input_pensjon_slutt,
+        gjeld = input_person_gjeld,
+        eiendom = input_person_eiendom
+    ),
+    skatt=Skatt(
+        gevinst = input_skatt_gevinst,
+        formue_kommune = input_formue_kommune,
+        formue_stat_lav = input_formue_stat_lav,
+        formue_stat_hoy = input_formue_stat_hoy,
+        formue_bunnfradrag = input_formue_bunnfradrag,
+        formue_grense_hoy = input_formue_grense_hoy
+    ),
+    fond=Fond(
+        startkapital = input_startkapital,
+        maanedlig_innskudd = input_maanedlig_innskudd,
+        rente_lav = input_rente_lav,
+        rente_mid = input_rente_mid,
+        rente_hoy = input_rente_hoy,
+        inflasjon = input_inflasjon,
+        kostnad = input_kostnad
+    ),
+    uttak=Uttak(
+        maanedlig_netto = input_maanedlig_netto,
+        maanedlig_brutto = beregn_brutto_fra_netto(input_maanedlig_netto, input_skatt_gevinst)
+    )
+)
 
 
 class Parametere:
@@ -34,6 +187,3 @@ class Parametere:
         #Formue
         self.gjeld = 0
         self.formue_eiendom = 0
-
-    def beregn_brutto_fra_netto(self, netto):
-        return netto / (1 - self.skatt_gevinst) 
