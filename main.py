@@ -1,3 +1,7 @@
+# -----------------------------
+# GUI
+# -----------------------------
+
 import kalkulator.beregning as beregning
 from kalkulator.sparing import sluttverdi_ved_start
 from kalkulator.parametere import Parametere

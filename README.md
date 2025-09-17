@@ -11,3 +11,5 @@ Oppsettet er fordelt slik:
     - Her beregnes alt av felles utregning
 - parametere.py
     - Her finnes all data som trengs for utregning
+- sparing.py
+    - 
