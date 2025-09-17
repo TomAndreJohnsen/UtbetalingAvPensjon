@@ -80,28 +80,28 @@ default_kostnad = 0.002
 default_maanedlig_netto = 35000
 
 # Entry verdier
-entry_fodselsdato = entry_fodselsdato.get() if entry_fodselsdato.get() else None
-entry_pensjon_start = entry_pensjon_start.get() if entry_pensjon_start.get() else None
-entry_pensjon_slutt = entry_pensjon_slutt.get() if entry_pensjon_slutt.get() else None
-entry_person_gjeld = int(entry_person_gjeld.get()) if entry_person_gjeld.get() else None
-entry_person_eiendom = int(entry_person_eiendom.get()) if entry_person_eiendom.get() else None
+entry_fodselsdato = None
+entry_pensjon_start = None
+entry_pensjon_slutt = None
+entry_person_gjeld = None
+entry_person_eiendom = None
 
-entry_skatt_gevinst = float(entry_skatt_gevinst.get()) if entry_skatt_gevinst.get() else None
-entry_formue_kommune = float(entry_formue_kommune.get()) if entry_formue_kommune.get() else None
-entry_formue_stat_lav = float(entry_formue_stat_lav.get()) if entry_formue_stat_lav.get() else None
-entry_formue_stat_hoy = float(entry_formue_stat_hoy.get()) if entry_formue_stat_hoy.get() else None
-entry_formue_bunnfradrag = int(entry_formue_bunnfradrag.get()) if entry_formue_bunnfradrag.get() else None
-entry_formue_grense_hoy = int(entry_formue_grense_hoy.get()) if entry_formue_grense_hoy.get() else None
+entry_skatt_gevinst = None
+entry_formue_kommune = None
+entry_formue_stat_lav = None
+entry_formue_stat_hoy = None
+entry_formue_bunnfradrag = None
+entry_formue_grense_hoy = None
 
-entry_startkapital = int(entry_startkapital.get()) if entry_startkapital.get() else None
-entry_maanedlig_innskudd = int(entry_maanedlig_innskudd.get()) if entry_maanedlig_innskudd.get() else None
-entry_rente_lav = float(entry_rente_lav.get()) if entry_rente_lav.get() else None
-entry_rente_mid = float(entry_rente_mid.get()) if entry_rente_mid.get() else None
-entry_rente_hoy = float(entry_rente_hoy.get()) if entry_rente_hoy.get() else None
-entry_inflasjon = float(entry_inflasjon.get()) if entry_inflasjon.get() else None
-entry_kostnad = float(entry_kostnad.get()) if entry_kostnad.get() else None
+entry_startkapital = None
+entry_maanedlig_innskudd = None
+entry_rente_lav = None
+entry_rente_mid = None
+entry_rente_hoy = None
+entry_inflasjon = None
+entry_kostnad = None
 
-entry_maanedlig_netto = int(entry_maanedlig_netto.get()) if entry_maanedlig_netto.get() else None
+entry_maanedlig_netto = None
 
 # Input verdier
 input_fodselsdato = hent_verdi(entry_fodselsdato, default_fodselsdato)
@@ -158,32 +158,3 @@ param = Parametere(
         maanedlig_brutto = beregn_brutto_fra_netto(input_maanedlig_netto, input_skatt_gevinst)
     )
 )
-
-
-class Parametere:
-    def __init__(self):
-        #Persondata
-        self.fodselsdato = date(1987, 4, 3)
-        self.pensjon_start = date(2054, 4, 3)
-        self.pensjon_slutt = date(2080, 4, 3)
-
-        #Fond
-        self.startkapital_brutto = 0
-        self.maanedlig_innskudd = 2000
-        self.rente_fond = RenteScenario(lav=0.075, mid=0.1039, hoy=0.1524)
-        self.inflasjon = 0.025
-        self.rente_kostnad = 0.002
-
-        #Skatt
-        self.skatt_gevinst = 0.3784
-        self.formueskatt_kommune = 0.00525
-        self.formueskatt_stat = RenteScenario(lav=0.00475, hoy=0.00575)
-        self.bunnfradrag_formue = 1_760_000
-
-        #Uttak
-        self.uttak_per_maaned_netto = 48000
-        self.uttak_per_maaned_brutto = self.beregn_brutto_fra_netto(self.uttak_per_maaned_netto)
-
-        #Formue
-        self.gjeld = 0
-        self.formue_eiendom = 0
