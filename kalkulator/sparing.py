@@ -1,4 +1,7 @@
+# -----------------------------
 #Alt som gjelder innskudd og vekst før pensjon
+# -----------------------------
+
 from .parametere import Parametere
 from datetime import date, timedelta
 

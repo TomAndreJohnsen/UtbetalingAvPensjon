@@ -1,4 +1,7 @@
-#Felles funksjoner som datoer, konvertering osv.
+# -----------------------------
+# Felles funksjoner som datoer, konvertering osv.
+# -----------------------------
+
 from .parametere import Parametere
 from datetime import date
 from .sparing import sluttverdi_ved_start

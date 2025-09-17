@@ -1,3 +1,7 @@
+# -----------------------------
+# Alt av verdier og data
+# -----------------------------
+
 import datetime as dt
 from dataclasses import dataclass, field
 
@@ -78,7 +82,9 @@ class Parametere:
     fond: Fond = field(default_factory=Fond)
     uttak: Uttak = field(default_factory=Uttak)
 
+# -----------------------------
 # Entry verdier
+# -----------------------------
 entry_fodselsdato = None
 entry_pensjon_start = None
 entry_pensjon_slutt = None
@@ -102,7 +108,9 @@ entry_kostnad = None
 
 entry_maanedlig_netto = None
 
+# -----------------------------
 # Input verdier
+# -----------------------------
 input_fodselsdato = hent_verdi(entry_fodselsdato, default_fodselsdato)
 input_pensjon_start = hent_verdi(entry_pensjon_start, default_pensjon_start)
 input_pensjon_slutt = hent_verdi(entry_pensjon_slutt, default_pensjon_slutt)
