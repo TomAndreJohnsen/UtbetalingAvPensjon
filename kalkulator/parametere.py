@@ -11,15 +11,6 @@ def beregn_brutto_fra_netto(netto, gevinst):
     return netto / (1 - gevinst) 
 
 # -----------------------------
-# Rentescenario
-# -----------------------------
-class RenteScenario:
-    def __init__(self, lav, mid=None, hoy=None):
-        self.lav = lav
-        self.mid = mid if mid is not None else lav
-        self.hoy = hoy if hoy is not None else lav
-
-# -----------------------------
 # Default verdier
 # -----------------------------
 default_fodselsdato = dt.date(1987, 4, 3)
