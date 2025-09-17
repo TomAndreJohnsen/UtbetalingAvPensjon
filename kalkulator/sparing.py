@@ -2,7 +2,6 @@
 from .parametere import Parametere
 from datetime import date, timedelta
 
-
 def maanedlig_saldo(startbelop, maander, aarlig_rente, maanedlig_uttak):
     saldo_liste = []
     saldo = startbelop
@@ -30,7 +29,9 @@ def sluttverdi_ved_start(param):
         dato = neste_maaned(dato)
 
         if dato.month == 12:
+            from main import formueskatt_list
             skatt = beregn_formueskatt(param, saldo)
+            formueskatt_list.append(round(skatt, 2))
             saldo -= skatt
 
     return saldo

@@ -35,7 +35,7 @@ default_formue_stat_hoy = 0.00575
 default_formue_bunnfradrag = 1_760_000
 default_formue_grense_hoy = 20_000_000
 
-default_startkapital = 0
+default_startkapital = 10_000_000
 default_maanedlig_innskudd = 2000
 default_rente_lav = 0.075
 default_rente_mid = 0.1039
