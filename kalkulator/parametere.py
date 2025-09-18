@@ -2,27 +2,37 @@
 # Alt av verdier og data
 # -----------------------------
 
-import datetime as dt
+from datetime import date
 from dataclasses import dataclass, field
 
 # -----------------------------
 # Funksjoner
 # -----------------------------
-def beregn_brutto_fra_netto(netto, gevinst):
-    return netto / (1 - gevinst) 
 
+def beregn_brutto_fra_netto(netto: float, gevinst: float) -> float:
+    """Beregner brutto fra netto og gevinstskatt."""
+    return netto / (1 - gevinst)
 
 # -----------------------------
-# Dataclass
+# Dataclasses
 # -----------------------------
 
 @dataclass
 class Person:
-    fodselsdato: dt.date | None = None
-    pensjon_start: dt.date = dt.date(2054, 4, 3)
-    pensjon_slutt: dt.date = dt.date(2080, 4, 3)
-    gjeld: int = 0
-    eiendom: int = 0
+    fodselsdato: date | None = None
+    pensjon_start: date | None = None 
+    pensjon_slutt: date | None = None
+    gjeld: int | None = None
+    eiendom: int | None = None
+
+    @property
+    def alder(self) -> str | int:
+        if self.fodselsdato is None:
+            return ""
+        today = date.today()
+        return today.year - self.fodselsdato.year - (
+            (today.month, today.day) < (self.fodselsdato.month, self.fodselsdato.day)
+        )
 
 @dataclass
 class Skatt:
@@ -30,13 +40,13 @@ class Skatt:
     formue_kommune: float = 0.007
     formue_stat_lav: float = 0.00475
     formue_stat_hoy: float = 0.00575
-    formue_bunnfradrag: float = 1_760_000
+    formue_bunnfradrag: int = 1_760_000
     formue_grense_hoy: int = 20_000_000
 
 @dataclass
 class Fond:
-    startkapital: int = 0
-    maanedlig_innskudd: int = 0
+    startkapital: int | None = None
+    maanedlig_innskudd: int | None = None
     rente_lav: float = 0.075
     rente_mid: float = 0.1039
     rente_hoy: float = 0.1524
@@ -45,8 +55,10 @@ class Fond:
 
 @dataclass
 class Uttak:
-    maanedlig_netto: int = 0
-    maanedlig_brutto: float = field(default_factory=lambda: beregn_brutto_fra_netto(35_000, 0.3784))
+    maanedlig_netto: int | None = None
+    maanedlig_brutto: float = field(
+        default_factory=lambda: beregn_brutto_fra_netto(35_000, 0.3784)
+    )
 
 @dataclass
 class Parametere:
