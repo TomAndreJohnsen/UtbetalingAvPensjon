@@ -1,2 +1,4 @@
-**Ideer**
-- Mulighet for en API til skatteetaten for å hente reele skatteverdier
+- Terminalmeny:
+    - 1. godtar alle tall og resultatet viser feil verdi
+    - 2. Start pensjon burde blitt endre til pensjon alder
+    - 3. Slutt pensjon må hente ut forventet levealder og ikke be om en dato
