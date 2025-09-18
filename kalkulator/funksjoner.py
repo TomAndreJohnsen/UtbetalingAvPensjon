@@ -55,25 +55,15 @@ def hent_dag(aar, maaned, prompt="Skriv inn dag: "):
 def vis_meny(param):
     clear()
     print("=== Pensjonskalkulator av Tom André ===\n")
-    
-    # Dynamiske verdier
-    print(f"Fødselsdato:          {vis_verdi(param.person.fodselsdato)}")
-    print(f"Alder:                {vis_verdi(getattr(param.person, 'alder', ''))}")
-    print(f"Ønsket netto pensjon: {vis_verdi(param.uttak.maanedlig_netto)}")
-    print(f"Start pensjon:        {vis_verdi(param.person.pensjon_start)}")
-    print(f"Slutt pensjon:        {vis_verdi(param.person.pensjon_slutt)}")
-    print(f"Gjeld:                {vis_verdi(param.person.gjeld)}")
-    print(f"Eiendom:              {vis_verdi(param.person.eiendom)}")
-    print(f"Startkapital:         {vis_verdi(param.fond.startkapital)}")
-    print(f"Månedlig innskudd:    {vis_verdi(param.fond.maanedlig_innskudd)}\n")
-    
-    # Statisk info
-    print("--- Statisk info ---")
-    print(f"Gevinstskatt:         {vis_verdi(param.skatt.gevinst)}")
-    print(f"Formue kommune:       {vis_verdi(param.skatt.formue_kommune)}")
-    print(f"Formue stat lav:      {vis_verdi(param.skatt.formue_stat_lav)}")
-    print(f"Formue stat høy:      {vis_verdi(param.skatt.formue_stat_hoy)}")
-    print(f"Bunnfradrag:          {vis_verdi(param.skatt.formue_bunnfradrag)}")
-    print(f"Høy grense:           {vis_verdi(param.skatt.formue_grense_hoy)}\n")
-    
-    print("------------------------\n")
+
+    # Venstre kolonne = dynamiske verdier, høyre kolonne = statisk info
+    print(f"Fødselsdato:        {vis_verdi(param.person.fodselsdato):<12}   Gevinstskatt: {param.skatt.gevinst}")
+    print(f"Alder:              {vis_verdi(param.person.alder):<12}   Formue kommune: {param.skatt.formue_kommune}")
+    print(f"Ønsket netto:       {vis_verdi(param.uttak.maanedlig_netto):<12}   Formue stat lav: {param.skatt.formue_stat_lav}")
+    print(f"Start pensjon:      {vis_verdi(param.person.pensjon_start):<12}   Formue stat høy: {param.skatt.formue_stat_hoy}")
+    print(f"Slutt pensjon:      {vis_verdi(param.person.pensjon_slutt):<12}   Bunnfradrag: {param.skatt.formue_bunnfradrag}")
+    print(f"Gjeld:              {vis_verdi(param.person.gjeld):<12}   Høy grense: {param.skatt.formue_grense_hoy}")
+    print(f"Eiendom:            {vis_verdi(param.person.eiendom):<12}")
+    print(f"Startkapital:       {vis_verdi(param.fond.startkapital):<12}")
+    print(f"Månedlig innskudd:  {vis_verdi(param.fond.maanedlig_innskudd):<12}")
+    print("\n------------------------\n")
