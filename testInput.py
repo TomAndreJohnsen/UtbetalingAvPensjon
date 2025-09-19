@@ -1,30 +1,9 @@
 # test_input.py
 from datetime import date
 from kalkulator.parametere import Parametere
-from kalkulator.funksjoner import hent_aar, hent_maaned, hent_dag, clear, vis_meny
+from kalkulator.funksjoner import clear, vis_meny, input_int, input_date
 
 param = Parametere()
-
-def input_int(prompt, felt):
-    while True:
-        try:
-            value = int(input(prompt))
-            setattr(param, felt, value)  # setter verdien direkte i param
-            break
-        except ValueError:
-            print("Ugyldig input. Skriv et heltall.")
-
-def input_date(prompt, attr):
-    while True:
-        try:
-            year = int(input("År (YYYY): "))
-            month = int(input("Måned (1-12): "))
-            day = int(input("Dag (1-31): "))
-            value = date(year, month, day)
-            setattr(param.person, attr, value)
-            break
-        except ValueError as e:
-            print("Ugyldig dato:", e)
 
 def main():
     while True:
